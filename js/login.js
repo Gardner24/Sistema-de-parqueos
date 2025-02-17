@@ -1,29 +1,49 @@
 function handleLogin() {
-    const role = document.getElementById('role').value;
-    const code = document.getElementById('code').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-    // Validar si el código cumple con el formato 
-    const validCode = /^[A-Za-z0-9]{1,8}$/;
-    if (!role || !code || !validCode.test(code)) {
-        alert('Por favor, ingrese un código válido (solo letras y números, máx. 8 caracteres).');
+    // Validar email y contraseña
+    const validEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!email || !validEmail.test(email)) {
+        alert("Ingrese un correo válido.");
         return false; 
     }
+    
+    if (!password || password.length < 6) {
+        alert("La contraseña debe tener al menos 6 caracteres.");
+        return false;
+    }
 
-    // Mostrar mensaje de bienvenida y redirigir
-    alert(`Bienvenido, ${role.charAt(0).toUpperCase() + role.slice(1)}.`);
-    switch (role) {
+    // Simulación de validación (sin conexión a base de datos por ahora)
+    const dummyUsers = [
+        { email: "juan.perez@example.com", password: "123456", nombre: "Juan Pérez", rol: "usuario" },
+        { email: "admin@example.com", password: "admin123", nombre: "Administrador", rol: "administrador" },
+        { email: "seguridad@example.com", password: "seguridad123", nombre: "Seguridad", rol: "seguridad" }
+    ];
+
+    const user = dummyUsers.find(user => user.email === email && user.password === password);
+
+    if (!user) {
+        alert("Correo o contraseña incorrectos.");
+        return false;
+    }
+
+    alert(`Bienvenido, ${user.nombre}.`);
+
+    // Redirigir según el rol
+    switch (user.rol) {
         case 'usuario':
             window.location.href = "../html/usuario.html";
             break;
         case 'seguridad':
-            window.location.href = './html/seguridad.html';
+            window.location.href = "../html/seguridad.html";
             break;
         case 'administrador':
-            window.location.href = './html/administrador.html';
+            window.location.href = "../html/administrador.html";
             break;
         default:
-            alert('Rol no válido');
+            alert("Rol no válido");
     }
-
-    return false; 
+    
+    return false;
 }
