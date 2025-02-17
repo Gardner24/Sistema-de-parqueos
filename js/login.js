@@ -29,21 +29,6 @@ function handleLogin() {
     }
 
     alert(`Bienvenido, ${user.nombre}.`);
-
-    // Redirigir según el rol
-    switch (user.rol) {
-        case 'usuario':
-            window.location.href = "../html/usuario.html";
-            break;
-        case 'seguridad':
-            window.location.href = "../html/seguridad.html";
-            break;
-        case 'administrador':
-            window.location.href = "../html/administrador.html";
-            break;
-        default:
-            alert("Rol no válido");
-    }
     
     return false;
 }
